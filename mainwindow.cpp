@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget* parent)
       m_loginWindow(nullptr),
       m_adminWindow(nullptr),
       m_customerWindow(nullptr),
+      m_navigationBar(nullptr),
       m_backButton(nullptr),
       m_forwardButton(nullptr),
       m_historyIndex(-1),
@@ -216,18 +217,20 @@ void MainWindow::setScrollableCentral(QWidget* widget) {
 }
 
 void MainWindow::setupNavigationBar() {
-    auto* nav = addToolBar("Navigation");
-    nav->setMovable(false);
-    nav->setFloatable(false);
-    nav->setObjectName("navigationBar");
+    m_navigationBar = addToolBar("Navigation");
+    m_navigationBar->setMovable(false);
+    m_navigationBar->setFloatable(false);
+    m_navigationBar->setObjectName("navigationBar");
 
-    m_backButton = new QPushButton("Back", this);
+    m_backButton = new QPushButton(QString::fromUtf8("←"), this);
     m_backButton->setObjectName("navBtn");
-    m_forwardButton = new QPushButton("Forward", this);
+    m_backButton->setToolTip("Back");
+    m_forwardButton = new QPushButton(QString::fromUtf8("→"), this);
     m_forwardButton->setObjectName("navBtn");
+    m_forwardButton->setToolTip("Forward");
 
-    nav->addWidget(m_backButton);
-    nav->addWidget(m_forwardButton);
+    m_navigationBar->addWidget(m_backButton);
+    m_navigationBar->addWidget(m_forwardButton);
 
     connect(m_backButton, &QPushButton::clicked, this, &MainWindow::goBack);
     connect(m_forwardButton, &QPushButton::clicked, this, &MainWindow::goForward);
@@ -285,6 +288,12 @@ void MainWindow::restoreHistory(const NavigationEntry& entry) {
 void MainWindow::updateNavigationButtons() {
     if (!m_backButton || !m_forwardButton)
         return;
-    m_backButton->setEnabled(m_historyIndex > 0);
-    m_forwardButton->setEnabled(m_historyIndex >= 0 && m_historyIndex < m_history.size() - 1);
+    const bool canGoBack = m_historyIndex > 0;
+    const bool canGoForward = m_historyIndex >= 0 && m_historyIndex < m_history.size() - 1;
+    m_backButton->setVisible(canGoBack);
+    m_backButton->setEnabled(canGoBack);
+    m_forwardButton->setVisible(canGoForward);
+    m_forwardButton->setEnabled(canGoForward);
+    if (m_navigationBar)
+        m_navigationBar->setVisible(canGoBack || canGoForward);
 }

@@ -12,6 +12,7 @@ class AdminWindow;
 class CustomerWindow;
 class LoginWindow;
 class QPushButton;
+class QToolBar;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -56,6 +57,7 @@ private:
     LoginWindow* m_loginWindow;
     AdminWindow* m_adminWindow;
     CustomerWindow* m_customerWindow;
+    QToolBar* m_navigationBar;
     QPushButton* m_backButton;
     QPushButton* m_forwardButton;
     QVector<NavigationEntry> m_history;

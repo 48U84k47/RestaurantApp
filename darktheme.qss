@@ -513,7 +513,10 @@ QPushButton#navBtn {
     color: #f97316;
     border: 1px solid #fed7aa;
     border-radius: 14px;
-    padding: 8px 16px;
+    min-width: 42px;
+    min-height: 34px;
+    padding: 6px 10px;
+    font-size: 20px;
     font-weight: 900;
 }
 
