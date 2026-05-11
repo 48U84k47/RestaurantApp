@@ -1,0 +1,33 @@
+# Qt build output
+build/
+build-*/
+debug/
+release/
+*.o
+*.obj
+*.exe
+*.dll
+*.a
+*.lib
+
+# Qt Creator user/session files
+*.pro.user
+*.pro.user.*
+.qmake.stash
+.qtcreator/
+
+# Generated Qt files
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+Makefile
+Makefile.*
+
+# App/runtime data
+*.db
+*.sqlite
+*.sqlite3
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

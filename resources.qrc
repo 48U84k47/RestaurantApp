@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/styles">
+        <file>darktheme.qss</file>
+    </qresource>
+    <qresource prefix="/images/menu">
+        <file alias="appetizers.jpg">assets/menu/appetizers.jpg</file>
+        <file alias="main-course.jpg">assets/menu/main-course.jpg</file>
+        <file alias="desserts.jpg">assets/menu/desserts.jpg</file>
+        <file alias="beverages.jpg">assets/menu/beverages.jpg</file>
+        <file alias="specials.jpg">assets/menu/specials.jpg</file>
+    </qresource>
+    <qresource prefix="/images/welcome">
+        <file alias="staff.jpg">assets/welcome/staff.jpg</file>
+        <file alias="delivery-bike.jpg">assets/welcome/delivery-bike.jpg</file>
+        <file alias="custom-delivery-bike.jpg">assets/welcome/custom-delivery-bike.jpg</file>
+        <file alias="dine-table.jpg">assets/welcome/dine-table.jpg</file>
+        <file alias="food-bag-logo.jpg">assets/welcome/food-bag-logo.jpg</file>
+    </qresource>
+    <qresource prefix="/images/ui">
+        <file alias="spin-plus.svg">assets/ui/spin-plus.svg</file>
+        <file alias="spin-minus.svg">assets/ui/spin-minus.svg</file>
+    </qresource>
+</RCC>
