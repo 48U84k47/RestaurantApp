@@ -1,27 +1,56 @@
 # Qt build output
 build/
 build-*/
+*build-*
 debug/
 release/
+object_script.*.Release
+object_script.*.Debug
+
+# C++ objects and libraries
 *.o
 *.obj
-*.exe
-*.dll
+*.slo
+*.lo
 *.a
 *.lib
+*.la
+*.lai
+*.so
+*.so.*
+*.dll
+*.dylib
+*.exe
 
 # Qt Creator user/session files
 *.pro.user
 *.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.autosave
+*creator.user*
+.qmake.cache
 .qmake.stash
 .qtcreator/
+CMakeLists.txt.user*
+compile_commands.json
 
 # Generated Qt files
 moc_*.cpp
+moc_*.h
 ui_*.h
 qrc_*.cpp
+*_plugin_import.cpp
+*_qmlcache.qrc
+*.moc
+*.qmlc
+*.jsc
+*.qm
+*.prl
+*.qmlls.ini
 Makefile
 Makefile.*
+Makefile*
 
 # App/runtime data
 *.db
