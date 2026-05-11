@@ -7,10 +7,83 @@
 #include <QFrame>
 #include <QGridLayout>
 #include <QHBoxLayout>
-#include <QIcon>
+#include <QPainter>
+#include <QPainterPath>
+#include <QPixmap>
 #include <QScreen>
-#include <QSize>
 #include <QVBoxLayout>
+
+class ImageModeButton : public QPushButton {
+public:
+    ImageModeButton(const QString& title, const QString& headline,
+                    const QString& body, const QString& imagePath,
+                    QWidget* parent = nullptr)
+        : QPushButton(parent),
+          m_title(title),
+          m_headline(headline),
+          m_body(body),
+          m_pixmap(imagePath)
+    {
+        setText(title + "\n" + headline + "\n" + body);
+        setMinimumHeight(190);
+        setCursor(Qt::PointingHandCursor);
+        setFocusPolicy(Qt::StrongFocus);
+    }
+
+protected:
+    void paintEvent(QPaintEvent*) override {
+        QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
+
+        const QRectF buttonRect = rect().adjusted(1, 1, -1, -1);
+        QPainterPath clipPath;
+        clipPath.addRoundedRect(buttonRect, 22, 22);
+        p.setClipPath(clipPath);
+
+        if (!m_pixmap.isNull()) {
+            const QSize targetSize = buttonRect.size().toSize();
+            QPixmap scaled = m_pixmap.scaled(targetSize, Qt::KeepAspectRatioByExpanding,
+                                             Qt::SmoothTransformation);
+            const QPoint topLeft(buttonRect.left() + (buttonRect.width() - scaled.width()) / 2,
+                                 buttonRect.top() + (buttonRect.height() - scaled.height()) / 2);
+            p.drawPixmap(topLeft, scaled);
+        } else {
+            p.fillPath(clipPath, QColor("#fff7ed"));
+        }
+
+        const QRectF labelBand(buttonRect.left(), buttonRect.bottom() - 76,
+                               buttonRect.width(), 76);
+        QLinearGradient shade(labelBand.topLeft(), labelBand.bottomLeft());
+        shade.setColorAt(0.0, QColor(0, 0, 0, 15));
+        shade.setColorAt(0.25, QColor(0, 0, 0, 100));
+        shade.setColorAt(1.0, QColor(0, 0, 0, 185));
+        p.fillRect(labelBand, shade);
+
+        p.setClipping(false);
+        p.setPen(QPen(underMouse() ? QColor("#f97316") : QColor("#fed7aa"), 2));
+        p.drawRoundedRect(buttonRect, 22, 22);
+
+        const QRect textRect = rect().adjusted(14, height() - 72, -14, -12);
+        p.setPen(Qt::white);
+        QFont titleFont("Segoe UI", 10, QFont::Black);
+        p.setFont(titleFont);
+        p.drawText(textRect.adjusted(0, 0, 0, -42), Qt::AlignCenter, m_title);
+
+        QFont headlineFont("Segoe UI", 12, QFont::Black);
+        p.setFont(headlineFont);
+        p.drawText(textRect.adjusted(0, 18, 0, -21), Qt::AlignCenter | Qt::TextWordWrap, m_headline);
+
+        QFont bodyFont("Segoe UI", 8, QFont::DemiBold);
+        p.setFont(bodyFont);
+        p.drawText(textRect.adjusted(0, 45, 0, 0), Qt::AlignCenter | Qt::TextWordWrap, m_body);
+    }
+
+private:
+    QString m_title;
+    QString m_headline;
+    QString m_body;
+    QPixmap m_pixmap;
+};
 
 LoginWindow::LoginWindow(QWidget* parent)
     : QWidget(parent),
@@ -68,12 +141,8 @@ void LoginWindow::setupUi() {
 
     auto createModeCard = [bg](const QString& title, const QString& headline,
                                const QString& body, const QString& imagePath) {
-        auto* btn = new QPushButton(title + "\n" + headline + "\n" + body, bg);
+        auto* btn = new ImageModeButton(title, headline, body, imagePath, bg);
         btn->setObjectName("modeCard");
-        btn->setMinimumHeight(190);
-        btn->setIcon(QIcon(imagePath));
-        btn->setIconSize(QSize(150, 108));
-        btn->setCursor(Qt::PointingHandCursor);
         return btn;
     };
 
