@@ -134,11 +134,12 @@ QFrame#welcomePage {
 QLabel#welcomeLogo {
     background-color: #fff7ed;
     color: #f97316;
-    border-radius: 44px;
+    border-radius: 28px;
     border: 6px solid #fed7aa;
-    min-width: 88px;
-    min-height: 88px;
-    font-size: 34px;
+    min-width: 250px;
+    min-height: 58px;
+    padding: 8px 22px;
+    font-size: 32px;
     font-weight: 900;
 }
 

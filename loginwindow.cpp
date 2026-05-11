@@ -101,7 +101,7 @@ LoginWindow::LoginWindow(QWidget* parent)
 
     m_logoTimer = new QTimer(this);
     connect(m_logoTimer, &QTimer::timeout, this, &LoginWindow::animateLogo);
-    m_logoTimer->start(2500);
+    m_logoTimer->start(450);
 }
 
 void LoginWindow::setupUi() {
@@ -124,7 +124,7 @@ void LoginWindow::setupUi() {
     brandLayout->setAlignment(Qt::AlignCenter);
     brandLayout->setSpacing(8);
 
-    m_logoLabel = new QLabel("C", brandFrame);
+    m_logoLabel = new QLabel("Corrindor", brandFrame);
     m_logoLabel->setAlignment(Qt::AlignCenter);
     m_logoLabel->setObjectName("welcomeLogo");
     auto* restaurantName = new QLabel("Corrindor Kitchen", brandFrame);
@@ -313,7 +313,10 @@ void LoginWindow::clearError() {
 }
 
 void LoginWindow::animateLogo() {
-    const QStringList labels = {"C", "CO", "GO", "25"};
+    const QStringList labels = {
+        "C", "Co", "Cor", "Corr", "Corri",
+        "Corrin", "Corrind", "Corrindo", "Corrindor"
+    };
     m_logoAnim = (m_logoAnim + 1) % labels.size();
     m_logoLabel->setText(labels[m_logoAnim]);
 }
